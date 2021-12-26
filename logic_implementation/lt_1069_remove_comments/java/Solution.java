@@ -7,45 +7,35 @@ public class Solution {
         StringBuilder sb = new StringBuilder();
         for (String s : source) {
             int left = 0;
-            int right = 0;
-            
-            while (right + 1 < s.length()) {
-                String str = s.substring(right, right+2);
+            for (int right = 0; right < s.length(); right++) {
+                String str = s.substring(right, Math.min(s.length(), right+2));
                 if (!blockCommentStart) {
 
                     if (str.equals("//")) {
                         sb.append(s.substring(left, right));
-                        right = s.length();
-                        left = right;
+                        left = s.length();
                         break;
                     }else if (str.equals("/*")) {
                         blockCommentStart = true;
                         sb.append(s.substring(left, right));
-                        right+=2;
-                        // do we need to move left?
-                        left = right;
-                        continue;
-                    }else{
-                        right++;
+                        right+=1;
                     }
-
                 }else{ //blockCommentStart == true
                     if (str.equals("*/")) {
                         blockCommentStart = false;
-                        right+=2;
-                        left = right;
-                    }else{
-                        right++;
-                        left++;
+                        right+=1;
+                        left = right+1;
                     }
                 }
             }
-            if (!blockCommentStart && left < s.length()) {
-                sb.append(s.substring(left));
-            }
-            if (!blockCommentStart && sb.length() > 0) {
-                list.add(sb.toString());
-                sb = new StringBuilder();
+            if (!blockCommentStart) {
+                if (left < s.length()) {
+                    sb.append(s.substring(left));
+                }
+                if (sb.length() > 0) {
+                    list.add(sb.toString());
+                    sb = new StringBuilder();
+                }
             }
         }
         return list;
