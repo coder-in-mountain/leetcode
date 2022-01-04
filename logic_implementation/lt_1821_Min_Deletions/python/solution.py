@@ -16,8 +16,10 @@ class Solution:
         for c in s:
             if c == 'A':
                 rightA+=1
-        minDel = rightA
-        for c in s:
+
+        # assume the worst case that we need to remove all As and keep all Bs.
+        minDel = rightA + leftB
+        for c in s: #以当前C所在位置分割，c和c的左面都是A，c的右面都是B
             if c == 'A':
                 rightA -= 1
             else:
