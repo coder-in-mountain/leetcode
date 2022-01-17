@@ -23,4 +23,9 @@ public class RecursiveSolution {
             swap(s, index, i);
         }
     }
+    void swap(int[] s, int a, int b) {
+        int tmp = s[a];
+        s[a] = s[b];
+        s[b] = tmp;
+    }
 }
